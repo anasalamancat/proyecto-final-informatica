@@ -31,7 +31,8 @@ public slots:
     void retornarAPosicionPrevialSalto();
     void detectarColisiones();
     void caerPorGravedad();
-    void detectarColisionesPlataformas();
+    bool detectarColisionesPlataformas();
+    bool detectarColisionesLlegada();
 
 private:
     QGraphicsPixmapItem *Rick;

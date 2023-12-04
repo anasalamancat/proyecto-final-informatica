@@ -16,23 +16,25 @@ MainWindow::MainWindow(QWidget *parent)
     plataformas1=new obstaculos(":/pictures/plataformaPequena.png",300,40,500,230);
     plataformas2=new obstaculos(":/pictures/plataformaPequena.png",200,40,900,400);
     plataformas3=new obstaculos(":/pictures/plataformaPequena.png",100,40,600,40);
-    plataformas4=new obstaculos(":/pictures/plataformaPequena.png",190,40,210,600);
-
+    plataformas4=new obstaculos(":/pictures/plataformaPequena.png",190,40,300,700);
+    llegada_= new llegada();
     ui->graphicsView->setScene(scene);
 
     scene->addItem(fondo);
-    scene->addItem(plataformas2);
-    scene->addItem(plataformas3);
-    scene->addItem(plataformas4);
+    menuPrincipal();
 
-    jugador1->setPos(100,700);
-    plataformas2->setPos(900,400);
-    plataformas3->setPos(600,40);
-    plataformas4->setPos(210,600);
-    plataformas1->setPos(500,230);
+    //scene->addItem(plataformas2);
+    //scene->addItem(plataformas3);
+    //scene->addItem(plataformas4);
+
+    //jugador1->setPos(100,700);
+    //plataformas2->setPos(900,400);
+    //plataformas3->setPos(600,40);
+    //plataformas4->setPos(210,600);
+    //plataformas1->setPos(500,230);
     //setCentralWidget(view);
-    scene->addItem(jugador1);
-    scene->addItem(plataformas1);
+    //scene->addItem(jugador1);
+    //scene->addItem(plataformas1);
     //menuPrincipal();
 }
 
@@ -49,7 +51,7 @@ MainWindow::~MainWindow()
     delete plataformas4;
     delete plataformas5;
     delete plataformas6;
-
+    delete llegada_;
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
@@ -66,28 +68,36 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event)
 
 void MainWindow::nivel_1()
 {
-    plataformas1=new obstaculos(":/pictures/plataformaPequena.png",300,40,500,230);
-    plataformas2=new obstaculos(":/pictures/plataformaPequena.png",200,40,900,400);
-    plataformas3=new obstaculos(":/pictures/plataformaPequena.png",100,40,600,40);
-    plataformas4=new obstaculos(":/pictures/plataformaPequena.png",190,40,100,800);
     fondo->setPixmap(QPixmap(":/pictures/garajeRick.png").scaled(1400,900));
     scene->addItem(fondo);
+    scene->addItem(jugador1);
     scene->addItem(plataformas1);
     scene->addItem(plataformas2);
     scene->addItem(plataformas3);
     scene->addItem(plataformas4);
-    jugador1->setPos(100,100);
+    scene->addItem(llegada_);
+    jugador1->setPos(100,700);
     plataformas1->setPos(500,230);
     plataformas2->setPos(900,400);
     plataformas3->setPos(600,40);
-    plataformas4->setPos(100,800);
+    plataformas4->setPos(300,700);
+    llegada_->setPos(1100,130);
 
 }
 
 void MainWindow::menuPrincipal()
 {
-    scene->setBackgroundBrush(QPixmap(":/pictures/FondoMenu.PNG").scaled(1400,900));
+    fondo->setPixmap(QPixmap(":/pictures/FondoMenu.PNG").scaled(1400,900));
+    scene->setBackgroundBrush(Qt::black);
     ui->pushButtonEmpezar->setVisible(true);
     ui->pushButtonDinamica->setVisible(true);
+}
+
+
+void MainWindow::on_pushButtonEmpezar_clicked()
+{
+    ui->pushButtonDinamica->setVisible(false);
+    ui->pushButtonEmpezar->setVisible(false);
+    nivel_1();
 }
 

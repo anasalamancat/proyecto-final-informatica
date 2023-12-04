@@ -5,8 +5,9 @@
 #include <background.h>
 #include <QGraphicsView>
 #include <rick.h>
-#include <obstaculos.h>
+#include "obstaculos.h"
 #include "jugador.h"
+#include "llegada.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -26,6 +27,9 @@ public:
     void menuPrincipal();
     void nivel_1();
 
+private slots:
+    void on_pushButtonEmpezar_clicked();
+
 private:
     QTimer* timercol;
     Ui::MainWindow *ui;
@@ -40,9 +44,7 @@ private:
     obstaculos *plataformas4;
     obstaculos *plataformas5;
     obstaculos *plataformas6;
-
-    obstaculos *llegada;
-
+    llegada *llegada_;
 
 };
 #endif // MAINWINDOW_H

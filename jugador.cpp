@@ -51,17 +51,26 @@ void jugador::movementKeys(QKeyEvent *event)
     if(event->key()== Qt::Key_D){
         cambiarImagenDerecha();
         contPasosDerecha++;
-        if(currentX<1285){
+        if(currentX<1285 && detectarColisionesPlataformas()==false){
             newX=currentX+move;
             this->setX(newX);
             desplazamientoSaltoDerecha=true;
+        }
+        else if(detectarColisionesPlataformas()){
+            newX=currentX-move;
+            this->setX(newX);
         }
     }
     else if(event->key()==Qt::Key_A){
         cambiarImagenIzquierda();
         contPasosIzquierda++;
-        if(currentX>0){
+        if(currentX>0 && detectarColisionesPlataformas()==false){
             newX=currentX-move;
+            this->setX(newX);
+            desplazamientoSaltoIzquierda=true;
+        }
+        else if(detectarColisionesPlataformas()){
+            newX=currentX+move;
             this->setX(newX);
             desplazamientoSaltoIzquierda=true;
         }
@@ -164,7 +173,7 @@ void jugador::caerPorGravedad()
     }
 }
 
-void jugador::detectarColisionesPlataformas()
+bool jugador::detectarColisionesPlataformas()
 {
     QList<QGraphicsItem *> colisiones= collidingItems();
 
@@ -178,12 +187,20 @@ void jugador::detectarColisionesPlataformas()
             int abajo=obstaculoColision->getAbajo();
             qDebug()<<"plataforma";
             colisionandoConPlataforma=true;
+            return true;
             verificarLadoColisionPlataformas(izquierda,derecha,arriba,abajo);
         }
         else{
             colisionandoConPlataforma=false;
+            return false;
         }
     }
+    qDebug()<<colisionandoConPlataforma;
+}
+
+bool jugador::detectarColisionesLlegada()
+{
+
 }
 
 
@@ -211,7 +228,10 @@ void jugador::retornarAPosicionPrevialSalto()
 
     if(nuevaPosY<=posicionPreviaSalto-150 || this->y()<8){
         timerSalto->stop();
-        this->setY(posicionPreviaSalto-50);
+        while(this->y()!=posicionPreviaSalto && detectarColisionesPlataformas()==false && this->y()<744){
+            this->setY(this->y()+velocidadSalto);
+        }
+        this->setY(this->y()-12);
     }
 }
 
