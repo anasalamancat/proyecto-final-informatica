@@ -9,13 +9,12 @@ jugador::jugador(QString direccion)
     timerColisiones = new QTimer();
     timerCaida= new QTimer();
 
-    velocidadSalto=10;
-    velDesplazamientoSalto=10;
+    velocidadSalto=16;
+    velDesplazamientoSalto=16;
     largoCuerpo = 162;
     anchoCuerpo = 125;
     contPasosDerecha=0;
     contPasosIzquierda=0;
-    capa=5;
     colisionandoConPlataforma=false;
     estaEnSuelo==false;
 
@@ -49,6 +48,7 @@ void jugador::movementKeys(QKeyEvent *event)
     int newX,newY;
     int move=16;
     if(event->key()== Qt::Key_D){
+        timerCaida->start(30);
         cambiarImagenDerecha();
         contPasosDerecha++;
         if(currentX<1285 && detectarColisionesPlataformas()==false){
@@ -62,6 +62,7 @@ void jugador::movementKeys(QKeyEvent *event)
         }
     }
     else if(event->key()==Qt::Key_A){
+        timerCaida->start(30);
         cambiarImagenIzquierda();
         contPasosIzquierda++;
         if(currentX>0 && detectarColisionesPlataformas()==false){
@@ -75,7 +76,7 @@ void jugador::movementKeys(QKeyEvent *event)
             desplazamientoSaltoIzquierda=true;
         }
     }
-    else if(event->key()==Qt::Key_W && !timerSalto->isActive()&&currentY>16){
+    else if(event->key()==Qt::Key_W && !timerSalto->isActive()&& currentY>16 &&detectarColisionesPlataformas()==false){
         timerCaida->stop();
         emit teclaSalto();
     }
@@ -131,24 +132,6 @@ void jugador::cambiarImagenIzquierda()
     }
 }
 
-void jugador::verificarLadoColisionPlataformas(int platIzquierda, int platDerecha, int platArriba, int platAbajo)
-{
-    int currentX=this->x();
-    int currentY=this->y();
-    if((currentX+anchoCuerpo)==platIzquierda){
-        avanzarDerecha==false;
-    }
-    if((currentX+anchoCuerpo)==platIzquierda && (currentY+largoCuerpo)>platArriba && currentY<platAbajo){
-        avanzarDerecha=false;
-    }
-
-
-}
-
-int jugador::getcapa()
-{
-    return capa;
-}
 
 void jugador::detectarColisiones()
 {
@@ -164,12 +147,13 @@ void jugador::detectarColisiones()
 void jugador::caerPorGravedad()
 {
     int currentY=this->y();
-    if(colisionandoConPlataforma==false && currentY<744){
-        timerCaida->start(100);
+    if(detectarColisionesPlataformas()==false && currentY<744){
+        timerCaida->start(30);
         this->setY(currentY+4);
     }
-    if(currentY>730 && currentY<744){
+    else{
         timerCaida->stop();
+        this->setY(this->y()-8);
     }
 }
 
@@ -179,16 +163,10 @@ bool jugador::detectarColisionesPlataformas()
 
     for(QGraphicsItem *i : colisiones){
         obstaculos* obstaculoColision =dynamic_cast<obstaculos*>(i);
-
         if(obstaculoColision!=nullptr){
-            int izquierda=obstaculoColision->getIzquierda();
-            int derecha=obstaculoColision->getDerecha();
-            int arriba=obstaculoColision->getArriba();
-            int abajo=obstaculoColision->getAbajo();
             qDebug()<<"plataforma";
             colisionandoConPlataforma=true;
             return true;
-            verificarLadoColisionPlataformas(izquierda,derecha,arriba,abajo);
         }
         else{
             colisionandoConPlataforma=false;
@@ -231,7 +209,6 @@ void jugador::retornarAPosicionPrevialSalto()
         while(this->y()!=posicionPreviaSalto && detectarColisionesPlataformas()==false && this->y()<744){
             this->setY(this->y()+velocidadSalto);
         }
-        this->setY(this->y()-12);
     }
 }
 

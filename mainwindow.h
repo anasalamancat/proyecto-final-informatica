@@ -44,7 +44,7 @@ private:
     obstaculos *plataformas4;
     obstaculos *plataformas5;
     obstaculos *plataformas6;
-    llegada *llegada_;
+    llegada *llegada1;
 
 };
 #endif // MAINWINDOW_H

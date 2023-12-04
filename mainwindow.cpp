@@ -13,11 +13,11 @@ MainWindow::MainWindow(QWidget *parent)
     timercol = new QTimer();
     view = new QGraphicsView(scene, this);
     fondo= new background(":/pictures/garajeRick.png");
-    plataformas1=new obstaculos(":/pictures/plataformaPequena.png",300,40,500,230);
-    plataformas2=new obstaculos(":/pictures/plataformaPequena.png",200,40,900,400);
-    plataformas3=new obstaculos(":/pictures/plataformaPequena.png",100,40,600,40);
+    plataformas1=new obstaculos(":/pictures/plataformaPequena.png",200,40,500,230);
+    plataformas2=new obstaculos(":/pictures/plataformaPequena.png",100,40,900,400);
+    plataformas3=new obstaculos(":/pictures/plataformaPequena.png",240,40,600,40);
     plataformas4=new obstaculos(":/pictures/plataformaPequena.png",190,40,300,700);
-    llegada_= new llegada();
+    llegada1= new llegada();
     ui->graphicsView->setScene(scene);
 
     scene->addItem(fondo);
@@ -51,7 +51,7 @@ MainWindow::~MainWindow()
     delete plataformas4;
     delete plataformas5;
     delete plataformas6;
-    delete llegada_;
+    delete llegada1;
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
@@ -62,7 +62,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
 void MainWindow::keyReleaseEvent(QKeyEvent *event)
 {
-    //character->keyReleaseEvent(event);
     jugador1->keyReleaseEvent(event);
 }
 
@@ -75,13 +74,13 @@ void MainWindow::nivel_1()
     scene->addItem(plataformas2);
     scene->addItem(plataformas3);
     scene->addItem(plataformas4);
-    scene->addItem(llegada_);
+    scene->addItem(llegada1);
     jugador1->setPos(100,700);
-    plataformas1->setPos(500,230);
-    plataformas2->setPos(900,400);
-    plataformas3->setPos(600,40);
-    plataformas4->setPos(300,700);
-    llegada_->setPos(1100,130);
+    plataformas1->setPos(582,600);
+    plataformas2->setPos(766,352);
+    plataformas3->setPos(880,230);
+    plataformas4->setPos(300,720);
+    llegada1->setPos(1200,130);
 
 }
 

@@ -20,7 +20,6 @@ public:
     void movement(QString direccionActual);
     void cambiarImagenDerecha();
     void cambiarImagenIzquierda();
-    void verificarLadoColisionPlataformas(int platIzquierda,int platDerecha, int platArriba, int platAbajo);
     int getcapa();
 
 signals:
@@ -49,7 +48,6 @@ private:
     int posicionPreviaSalto;
     int contPasosIzquierda;
     int contPasosDerecha;
-    int capa;
     bool colisionandoConPlataforma;
     bool estaEnSuelo;
     bool avanzarArriba,avanzarAbajo,avanzarIzquierda,avanzarDerecha;
