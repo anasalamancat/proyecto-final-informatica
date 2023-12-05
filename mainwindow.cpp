@@ -80,6 +80,7 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event)
 void MainWindow::nivel_1()
 {
     ui->lineEdit->setVisible(true);
+    ui->lineEdit->setText("NIVEL 1");
     scene->setBackgroundBrush(Qt::green);
     fondo->setPixmap(QPixmap(":/pictures/FondoPrimerNivel.png").scaled(1400,900));
     caraRick->setPixmap(QPixmap(":/pictures/caraRick.png").scaled(100,100));
@@ -95,43 +96,58 @@ void MainWindow::nivel_1()
     scene->addItem(plataformas5);
     scene->addItem(plataformas6);
     scene->addItem(plataformas7);
+    scene->addItem(plataformas8);
+    scene->addItem(plataformas9);
     scene->addItem(porcentajeVida);
     scene->addItem(llegada1);
     scene->addItem(enemigo1);
-    jugador1->setPos(1170,60);
-    caraRick->setPos(70,10);
+    jugador1->setPos(1170,70);
+    caraRick->setPos(50,10);
     porcentajeVida->setPos(150,15);
     plataformas3->setPos(560,580);
-    plataformas4->setPos(300,770);
+    plataformas4->setPos(206,770);
     plataformas5->setPos(970,630);
-    plataformas6->setPos(900,410);
+    plataformas6->setPos(900,417);
     plataformas7->setPos(1130,270);
+    plataformas8->setPos(1130,750);
+    plataformas9->setPos(120,470);
+
     llegada1->setPos(30,750);
     enemigo1->setPos(random_numberX,200);
 }
 
 void MainWindow::nivel_2()
 {
+    ui->lineEdit->setText("NIVEL 2");
     enemigo2->setPixmap(QPixmap(":/pictures/enemigoCaminandoDerecha.png").scaled(100,140));
     scene->addItem(enemigo2);
-    enemigo2->setPos(random_numberX+500,400);
+    enemigo2->setPos(random_numberX+900,500);
     fondo->setPixmap(QPixmap(":/pictures/FondoSegundoNivel.png").scaled(1400,900));
-    plataformas1->setPos(600,650);
-    plataformas2->setPos(800,512);
-    plataformas3->setPos(560,380);
-    llegada1->setPos(1170,50);
+    plataformas1->setPos(600,550);
+    plataformas2->setPos(800,712);
+    plataformas3->setPos(480,640);
+    scene->addItem(plataformas1);
+    scene->addItem(plataformas2);
+    llegada1->setPos(1170,60);
 }
 
 void MainWindow::nivel_3()
 {
-    enemigo3->setPixmap(QPixmap(":/pictures/enemigoCaminandoDerecha.png").scaled(100,140));
-    enemigo3->setPos(random_numberX,300);
-    scene->addItem(enemigo3);
-    enemigo4->setPos(random_numberX,400);
-    enemigo4->setPixmap(QPixmap(":/pictures/enemigoCaminandoDerecha.png").scaled(100,140));
-    scene->addItem(enemigo4);
+    ui->lineEdit->setText("NIVEL 3 - PARTE 1");
     fondo->setPixmap(QPixmap(":/pictures/garajeRick.png").scaled(1400,900));
-    llegada1->setPos(40,150);
+    llegada1->setPos(60,260);
+    enemigo3->setPixmap(QPixmap(":/pictures/enemigoCaminandoDerecha.png").scaled(100,140));
+    enemigo3->setPos(random_numberX,150);
+    scene->addItem(enemigo3);
+    plataformas1->setPos(1100,340);
+    plataformas2->setPos(880,450);
+    plataformas3->setPos(690,600);
+    plataformas4->setPos(490,500);
+    plataformas5->setPos(380,390);
+    plataformas6->setPos(200,650);
+    plataformas7->setPos(50,400);
+    plataformas9->setPos(560,730);
+
 }
 
 void MainWindow::eliminarElementos()
@@ -153,6 +169,7 @@ void MainWindow::eliminarElementos()
     scene->removeItem(enemigo4);
     scene->removeItem(caraRick);
     scene->removeItem(porcentajeVida);
+    ui->lineEdit->setVisible(false);
 }
 
 void MainWindow::menuPrincipal()
@@ -188,12 +205,16 @@ void MainWindow::completarNivel(bool NIvelCompletado)
         if(nivelActual==2){
             nivel_3();
         }
+        if(nivelActual==3){
+            eliminarElementos();
+            fondo->setPixmap(QPixmap(":/pictures/ganar.jpg").scaled(1400,900));
+            ui->pushButtongGameOver->setVisible(true);
+        }
     }
 }
 
 void MainWindow::enemigo1Dispara(bool Disparar)
 {
-    qDebug()<<Disparar;
     if(Disparar){
         int direccion=enemigo1->getEnemy_direction_x();
         int posX= enemigo1->getPosX();
@@ -227,4 +248,9 @@ void MainWindow::jugadorHerido(bool herido)
 }
 
 
+void MainWindow::on_pushButtonDinamica_clicked()
+{
+    ui->pushButtonDinamica->setVisible(false);
+    ui->pushButtonEmpezar->setVisible(false);
+}
 

@@ -38,6 +38,8 @@ private slots:
     void jugadorHerido(bool herido);
     void on_pushButtongGameOver_clicked();
 
+    void on_pushButtonDinamica_clicked();
+
 private:
     Ui::MainWindow *ui;
     background* fondo;

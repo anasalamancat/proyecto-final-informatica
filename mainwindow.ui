@@ -67,8 +67,8 @@
    <widget class="QPushButton" name="pushButtongGameOver">
     <property name="geometry">
      <rect>
-      <x>850</x>
-      <y>600</y>
+      <x>860</x>
+      <y>710</y>
       <width>361</width>
       <height>51</height>
      </rect>
@@ -87,9 +87,9 @@
    <widget class="QLineEdit" name="lineEdit">
     <property name="geometry">
      <rect>
-      <x>650</x>
+      <x>800</x>
       <y>0</y>
-      <width>151</width>
+      <width>391</width>
       <height>41</height>
      </rect>
     </property>
@@ -101,6 +101,9 @@
     </property>
     <property name="text">
      <string>NIVEL 1 </string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
   </widget>

@@ -84,7 +84,7 @@ void jugador::movementKeys(QKeyEvent *event)
     }
     timerHerido->start(20);
 
-    //qDebug()<<this->x()<<","<<this->y();
+    qDebug()<<this->x()<<","<<this->y();
 }
 
 
@@ -154,7 +154,6 @@ bool jugador::detectarColisionesPlataformas()
     for(QGraphicsItem *i : colisiones){
         obstaculos* obstaculoColision =dynamic_cast<obstaculos*>(i);
         if(obstaculoColision!=nullptr){
-           // qDebug()<<"plataforma";
             colisionandoConPlataforma=true;
             return true;
         }
@@ -205,7 +204,7 @@ void jugador::detectarColisionesBalas()
         if(objetoColision!=nullptr){
             inicializarValores();
             emit colisionBalaOEnemigo(true);
-            timerHerido->stop();
+            delete objetoColision;
         }
     }
 
