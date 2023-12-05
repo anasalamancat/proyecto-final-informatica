@@ -18,7 +18,7 @@ public:
     QRectF boundingRect();
     void paint(QPainter *painter, QStyleOptionGraphicsItem *option, QWidget *widget);
     //int type() const;
- //   ~Enemy();
+    ~Enemy();
 
 public slots:
     void move(); //movimiento de los enemigos

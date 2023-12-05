@@ -24,14 +24,15 @@ void Player::keyPressEvent(QKeyEvent *event){
             setPos(x(), y() -10);
     }
     else if(event->key() == Qt::Key_Down){
-        if(pos().y()+100 < 900)
-            setPos(x(), y() +10);
+        if(pos().y()+100 < 900){
+            setPos(x(), y()+10);
+        }
     }
 
 }
 
 void Player::spawn(){
-    // Crear un objeto de la clase minotauro como enemigo
+    // Crear un objeto de la clase enemigo
     Enemy * enemy = new Enemy();
 
     // Añadir el enemigo a la escena

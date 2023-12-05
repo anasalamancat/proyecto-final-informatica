@@ -2,6 +2,7 @@
 #include <QTimer>
 #include <QGraphicsScene>
 #include <QList>
+#include <QDebug>
 #include "Enemy.h"
 #include "juego.h"
 
@@ -47,25 +48,27 @@ void Bullet::move(){
 
     float direccionBala = anguloLanzamiento * direccion;
 
-    tiempoVuelo += 0.1f; // Puedes ajustar este valor según la frecuencia de actualización
+    tiempoVuelo += 0.3f; // Puedes ajustar este valor según la frecuencia de actualización
 
     // Calcular la posición de la bala en x, usando la fórmula x = v * cos(a) * t
     // Donde v es la velocidad inicial, a es el ángulo de lanzamiento, y t es el tiempo de vuelo
     float x = velocidad * qCos(qDegreesToRadians(direccionBala)) * tiempoVuelo;
 
-    // Calcular la posición de la bala en y, usando la fórmula y = v * sin(a) * t - 0.5 * g * t^2
+    // Calcular la posición de la bala en y, usando la fórmula y = v * sin(a) * t - 0.05 * g * t^2
     // Donde v es la velocidad inicial, a es el ángulo de lanzamiento, g es la gravedad, y t es el tiempo de vuelo
-    float y = velocidad * qSin(qDegreesToRadians(direccionBala)) * tiempoVuelo - 0.5f * gravedad * tiempoVuelo * tiempoVuelo;
+    float y = velocidad * qSin(qDegreesToRadians(direccionBala)) * tiempoVuelo - 0.05f * (gravedad*direccion) * tiempoVuelo * tiempoVuelo;
 
-    float _x = x + posX;
-    float _y = y + posY;
+    posX += x*direccion;
+    posY += y*direccion;
 
     // Establecer la posición de la bala según los valores calculados
-    setPos(_x, _y);
+    setPos(posX, posY);
+
+    qDebug() << posX << "," << posY;
 
 
     // if the bullet is off the screen, destroy it
-    if (pos().x() + rect().width() < 0 || pos().x() + rect().width() > 1400 ){
+    if (pos().x() + rect().width() < 0 || pos().x() + rect().width() > 1400 || pos().y() > 900){
         scene()->removeItem(this);
         delete this;
     }

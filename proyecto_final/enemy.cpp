@@ -10,10 +10,10 @@ extern Game * game;
 Enemy::Enemy(QGraphicsItem *parent): QObject(), QGraphicsRectItem(parent){
     //set random x position
     int random_number = rand() % 800;
-    setPos(random_number,400);
+    setPos(random_number,450);
 
     // drew the rect
-    setRect(0,0,100,160);
+    setRect(0,0,100,200);
 
     // make/connect a timer to move() the enemy every so often
     QTimer * timer = new QTimer(this);
@@ -32,11 +32,11 @@ int enemy_direction_x = 1;
 int ENEMY_SPEED_X = 5;
 
 
-void Enemy::disparar(){
-    Bullet* bullet = new Bullet(pos().x(), pos().y(), enemy_direction_x);
-    bullet->setPos(this->pos().x()+100*enemy_direction_x, this->pos().y()+20);
-    scene()->addItem(bullet);
-}
+//void Enemy::disparar(){
+    //Bullet* bullet = new Bullet(pos().x(), pos().y(), enemy_direction_x);
+    //bullet->setPos(this->pos().x()+100*enemy_direction_x, this->pos().y()+20);
+  //  scene()->addItem(bullet);
+//}
 
 
 void Enemy::move(){
@@ -56,14 +56,20 @@ void Enemy::move(){
     }
 
     // Destruir el enemigo cuando salga de la escena por abajo
-    if (y() > 900){
+    if (pos().y() > 900){
         scene()->removeItem(this);
         delete this;
     }
 }
 
-//Enemy::~Enemy(){
-//    delete timerB;
-//}
+void Enemy::disparar(){
+    Bullet* bullet = new Bullet(pos().x(), pos().y(), enemy_direction_x);
+    bullet->setPos(this->pos().x()+100*enemy_direction_x, this->pos().y()+20);
+    scene()->addItem(bullet);
+}
+
+Enemy::~Enemy(){
+    delete timerB;
+}
 
 
