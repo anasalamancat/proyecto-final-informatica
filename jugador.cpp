@@ -8,15 +8,7 @@ jugador::jugador(QString direccion)
     timerSalto = new QTimer();
     timerColisiones = new QTimer();
     timerCaida= new QTimer();
-
-    velocidadSalto=16;
-    velDesplazamientoSalto=16;
-    largoCuerpo = 162;
-    anchoCuerpo = 125;
-    contPasosDerecha=0;
-    contPasosIzquierda=0;
-    colisionandoConPlataforma=false;
-    estaEnSuelo==false;
+    inicializarValores();
 
     connect(this,&jugador::teclaSalto,this,&jugador::empezarSalto);
     connect(timerSalto,&QTimer::timeout,this,&jugador::retornarAPosicionPrevialSalto);
@@ -34,6 +26,17 @@ jugador::~jugador()
     delete timerSalto;
     delete timerColisiones;
     delete timerCaida;
+}
+
+void jugador::inicializarValores()
+{
+    velocidadSalto=16;
+    velDesplazamientoSalto=16;
+    largoCuerpo = 142;
+    anchoCuerpo = 105;
+    contPasosDerecha=0;
+    contPasosIzquierda=0;
+    colisionandoConPlataforma=false;
 }
 
 
@@ -57,7 +60,7 @@ void jugador::movementKeys(QKeyEvent *event)
             desplazamientoSaltoDerecha=true;
         }
         else if(detectarColisionesPlataformas()){
-            newX=currentX-move;
+            newX=currentX-(move*2);
             this->setX(newX);
         }
     }
@@ -71,7 +74,7 @@ void jugador::movementKeys(QKeyEvent *event)
             desplazamientoSaltoIzquierda=true;
         }
         else if(detectarColisionesPlataformas()){
-            newX=currentX+move;
+            newX=currentX+(move*2);
             this->setX(newX);
             desplazamientoSaltoIzquierda=true;
         }
@@ -84,7 +87,7 @@ void jugador::movementKeys(QKeyEvent *event)
         newY=currentY+move;
         this->setY(newY);
     }
-    //qDebug()<<this->x()<<","<<this->y();
+    qDebug()<<this->x()<<","<<this->y();
 }
 
 
@@ -133,6 +136,7 @@ void jugador::cambiarImagenIzquierda()
 }
 
 
+
 void jugador::caerPorGravedad()
 {
     int currentY=this->y();
@@ -162,7 +166,6 @@ bool jugador::detectarColisionesPlataformas()
             return false;
         }
     }
-    qDebug()<<colisionandoConPlataforma;
 }
 
 bool jugador::detectarColisionesLlegada()
@@ -172,7 +175,7 @@ bool jugador::detectarColisionesLlegada()
     for(QGraphicsItem *i:colisiones){
         llegada* objetoColision=dynamic_cast<llegada*>(i);
         if(objetoColision!=nullptr){
-            qDebug()<<"llegóooo";
+            inicializarValores();
             emit pasarDeNivel(true);
             return true;
         }

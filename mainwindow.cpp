@@ -7,21 +7,24 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     ui-> graphicsView->setSceneRect(0,0,1400,900);
-
+    nivelActual=0;
     jugador1 =new jugador(":/pictures/rickDeFrente.png");
     scene = new QGraphicsScene(this);
     view = new QGraphicsView(scene, this);
     fondo= new background(":/pictures/garajeRick.png");
+    caraRick= new QGraphicsPixmapItem();
+    porcentajeVida=new QGraphicsPixmapItem(QPixmap(":/pictures/3vidas.jpg").scaled(131,40));
     timerColisiones= new QTimer();
+
     plataformas1=new obstaculos(":/pictures/plataformaPequena.png",200,40);
-    plataformas2=new obstaculos(":/pictures/plataformaPequena.png",130,40);
+    plataformas2=new obstaculos(":/pictures/plataformaPequena.png",170,40);
     plataformas3=new obstaculos(":/pictures/plataformaPequena.png",140,40);
     plataformas4=new obstaculos(":/pictures/plataformaPequena.png",190,40);
     plataformas5=new obstaculos(":/pictures/plataformaPequena.png",150,40);
     plataformas6=new obstaculos(":/pictures/plataformaPequena.png",160,40);
-    plataformas7=new obstaculos(":/pictures/plataformaPequena.png",150,40);
+    plataformas7=new obstaculos(":/pictures/plataformaPequena.png",180,40);
     plataformas8=new obstaculos(":/pictures/plataformaPequena.png",200,40);
-    plataformas9=new obstaculos(":/pictures/plataformaPequena.png",130,40);
+    plataformas9=new obstaculos(":/pictures/plataformaPequena.png",170,40);
 
     llegada1= new llegada();
     ui->graphicsView->setScene(scene);
@@ -29,22 +32,7 @@ MainWindow::MainWindow(QWidget *parent)
     scene->addItem(fondo);
     menuPrincipal();
 
-    //connect(timerColisiones,&QTimer::timeout,this,&MainWindow::pasarNivel_1);
     connect(jugador1,SIGNAL(pasarDeNivel(bool)),this,SLOT(completarNivel(bool)));
-
-    //scene->addItem(plataformas2);
-    //scene->addItem(plataformas3);
-    //scene->addItem(plataformas4);
-
-    //jugador1->setPos(100,700);
-    //plataformas2->setPos(900,400);
-    //plataformas3->setPos(600,40);
-    //plataformas4->setPos(210,600);
-    //plataformas1->setPos(500,230);
-    //setCentralWidget(view);
-    //scene->addItem(jugador1);
-    //scene->addItem(plataformas1);
-    //menuPrincipal();
 }
 
 MainWindow::~MainWindow()
@@ -62,6 +50,8 @@ MainWindow::~MainWindow()
     delete plataformas6;
     delete llegada1;
     delete timerColisiones;
+    delete caraRick;
+    delete porcentajeVida;
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
@@ -77,8 +67,12 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event)
 void MainWindow::nivel_1()
 {
     fondo->setPixmap(QPixmap(":/pictures/FondoPrimerNivel.png").scaled(1400,900));
+    caraRick->setPixmap(QPixmap(":/pictures/caraRick.png").scaled(70,70));
+    caraRick->setZValue(5);
+    porcentajeVida->setZValue(5);
     scene->addItem(fondo);
     scene->addItem(jugador1);
+    scene->addItem(caraRick);
     scene->addItem(plataformas1);
     scene->addItem(plataformas2);
     scene->addItem(plataformas3);
@@ -86,28 +80,32 @@ void MainWindow::nivel_1()
     scene->addItem(plataformas5);
     scene->addItem(plataformas6);
     scene->addItem(plataformas7);
-    scene->addItem(plataformas8);
-    scene->addItem(plataformas9);
-
+    scene->addItem(porcentajeVida);
     scene->addItem(llegada1);
     jugador1->setPos(50,700);
-    plataformas1->setPos(582,600);
-    plataformas2->setPos(766,452);
-    plataformas3->setPos(680,330);
+    caraRick->setPos(70,10);
+    plataformas1->setPos(600,650);
+    plataformas2->setPos(800,512);
+    plataformas3->setPos(560,380);
     plataformas4->setPos(300,770);
-    plataformas5->setPos(400,400);
-    plataformas6->setPos(900,700);
-    plataformas7->setPos(900,270);
-    plataformas8->setPos(1030,200);
-    llegada1->setPos(1100,90);
+    plataformas5->setPos(970,630);
+    plataformas6->setPos(900,270);
+    plataformas7->setPos(1130,170);
+    llegada1->setPos(1170,60);
+    porcentajeVida->setPos(150,15);
 }
 
 void MainWindow::nivel_2()
 {
     scene->removeItem(plataformas1);
     scene->removeItem(plataformas2);
-    jugador1->setPos(50,700);
+    llegada1->setPos(20,730);
     fondo->setPixmap(QPixmap(":/pictures/FondoSegundoNivel.png").scaled(1400,900));
+}
+
+void MainWindow::nivel_3()
+{
+    fondo->setPixmap(QPixmap(":/pictures/garajeRick.png").scaled(1400,900));
 }
 
 void MainWindow::menuPrincipal()
@@ -129,7 +127,13 @@ void MainWindow::on_pushButtonEmpezar_clicked()
 void MainWindow::completarNivel(bool NIvelCompletado)
 {
     if(NIvelCompletado){
-        nivel_2();
+        nivelActual++;
+        if(nivelActual==1){
+            nivel_2();
+        }
+        if(nivelActual==2){
+            nivel_3();
+        }
     }
 }
 

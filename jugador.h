@@ -24,6 +24,7 @@ public:
     int getcapa();
     bool getPasarNivel();
     void setPasarNivel(bool estado);
+    void inicializarValores();
 
 signals:
     void teclaSalto();
@@ -52,7 +53,6 @@ private:
     int contPasosIzquierda;
     int contPasosDerecha;
     bool colisionandoConPlataforma;
-    bool estaEnSuelo;
     bool avanzarArriba,avanzarAbajo,avanzarIzquierda,avanzarDerecha;
 
 };
