@@ -32,8 +32,8 @@ void jugador::inicializarValores()
 {
     velocidadSalto=16;
     velDesplazamientoSalto=16;
-    largoCuerpo = 112;
-    anchoCuerpo = 75;
+    largoCuerpo = 142;
+    anchoCuerpo = 105;
     contPasosDerecha=0;
     contPasosIzquierda=0;
     colisionandoConPlataforma=false;
@@ -45,7 +45,6 @@ void jugador::movementKeys(QKeyEvent *event)
     if(!this){
         return;
     }
-
     int currentX=this->x();
     int currentY=this->y();
     int newX,newY;
@@ -54,41 +53,40 @@ void jugador::movementKeys(QKeyEvent *event)
         timerCaida->start(30);
         cambiarImagenDerecha();
         contPasosDerecha++;
-        if(currentX<1285 && detectarColisionesPlataformas()==false){
+        if(currentX<1285 /*&& detectarColisionesPlataformas()==false*/){
             newX=currentX+move;
             this->setX(newX);
             desplazamientoSaltoDerecha=true;
-        }
+        }/*
         else if(detectarColisionesPlataformas()){
-            newX=currentX-(move*2);
+            newX=currentX-move;
             this->setX(newX);
-        }
+        }*/
     }
     else if(event->key()==Qt::Key_A){
         timerCaida->start(30);
         cambiarImagenIzquierda();
         contPasosIzquierda++;
-        if(currentX>0 && detectarColisionesPlataformas()==false){
+        if(currentX>0 /*&& detectarColisionesPlataformas()==false*/){
             newX=currentX-move;
             this->setX(newX);
             desplazamientoSaltoIzquierda=true;
-        }
+        }/*
         else if(detectarColisionesPlataformas()){
-            newX=currentX+(move*2);
+            newX=currentX+move;
             this->setX(newX);
             desplazamientoSaltoIzquierda=true;
-        }
+        }*/
     }
-    else if(event->key()==Qt::Key_W && !timerSalto->isActive()&& currentY>16){
-            timerCaida->stop();
-            emit teclaSalto();
+    else if(event->key()==Qt::Key_W && !timerSalto->isActive()&& currentY>16 &&detectarColisionesPlataformas()==false){
+        timerCaida->stop();
+        emit teclaSalto();
     }
     else if(event->key()==Qt::Key_S &&currentY<744){
         newY=currentY+move;
         this->setY(newY);
     }
     qDebug()<<this->x()<<","<<this->y();
-
 }
 
 
@@ -145,7 +143,7 @@ void jugador::caerPorGravedad()
         timerCaida->start(30);
         this->setY(currentY+10);
     }
-    else if(detectarColisionesPlataformas()==true){
+    else{
         timerCaida->stop();
         this->setY(currentY-8);
     }
@@ -207,10 +205,11 @@ void jugador::retornarAPosicionPrevialSalto()
         int nuevaposX=this->x()-velDesplazamientoSalto;
         this->setX(nuevaposX);
     }
-    if(nuevaPosY<=posicionPreviaSalto-190 || this->y()<8){
+    if(nuevaPosY<=posicionPreviaSalto-150 || this->y()<8){
         timerSalto->stop();
         while(this->y()!=posicionPreviaSalto && detectarColisionesPlataformas()==false && this->y()<744){
                 this->setY(this->y()+velocidadSalto);
         }
     }
 }
+
