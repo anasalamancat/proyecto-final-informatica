@@ -4,7 +4,7 @@
 obstaculos::obstaculos(QString direccionImagen,int ancho, int alto)
 {
     plataformas=new QGraphicsPixmapItem();
-    setZValue(5);
+    setZValue(4);
     setPixmap(QPixmap(direccionImagen).scaled(ancho,alto));
 }
 

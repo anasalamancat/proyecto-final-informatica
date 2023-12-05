@@ -9,6 +9,7 @@
 #include <QGraphicsView>
 #include "obstaculos.h"
 #include "llegada.h"
+#include "enemigo.h"
 
 class jugador: public QObject, public QGraphicsPixmapItem
 {
