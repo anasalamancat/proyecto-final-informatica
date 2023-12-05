@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     plataformas1=new obstaculos(":/pictures/plataformaPequena.png",200,40);
     plataformas2=new obstaculos(":/pictures/plataformaPequena.png",170,40);
-    plataformas3=new obstaculos(":/pictures/plataformaPequena.png",140,40);
+    plataformas3=new obstaculos(":/pictures/plataformaPequena.png",180,40);
     plataformas4=new obstaculos(":/pictures/plataformaPequena.png",190,40);
     plataformas5=new obstaculos(":/pictures/plataformaPequena.png",150,40);
     plataformas6=new obstaculos(":/pictures/plataformaPequena.png",160,40);
@@ -73,8 +73,6 @@ void MainWindow::nivel_1()
     scene->addItem(fondo);
     scene->addItem(jugador1);
     scene->addItem(caraRick);
-    scene->addItem(plataformas1);
-    scene->addItem(plataformas2);
     scene->addItem(plataformas3);
     scene->addItem(plataformas4);
     scene->addItem(plataformas5);
@@ -82,24 +80,25 @@ void MainWindow::nivel_1()
     scene->addItem(plataformas7);
     scene->addItem(porcentajeVida);
     scene->addItem(llegada1);
-    jugador1->setPos(50,700);
+    jugador1->setPos(1170,60);
     caraRick->setPos(70,10);
-    plataformas1->setPos(600,650);
-    plataformas2->setPos(800,512);
-    plataformas3->setPos(560,380);
+    porcentajeVida->setPos(150,15);
+    plataformas3->setPos(560,580);
     plataformas4->setPos(300,770);
     plataformas5->setPos(970,630);
-    plataformas6->setPos(900,270);
-    plataformas7->setPos(1130,170);
-    llegada1->setPos(1170,60);
-    porcentajeVida->setPos(150,15);
+    plataformas6->setPos(900,410);
+    plataformas7->setPos(1130,270);
+    llegada1->setPos(30,750);
 }
 
 void MainWindow::nivel_2()
 {
-    scene->removeItem(plataformas1);
-    scene->removeItem(plataformas2);
-    llegada1->setPos(20,730);
+    scene->addItem(plataformas1);
+    scene->addItem(plataformas2);
+    plataformas1->setPos(600,650);
+    plataformas2->setPos(800,512);
+    plataformas3->setPos(560,380);
+    llegada1->setPos(1170,50);
     fondo->setPixmap(QPixmap(":/pictures/FondoSegundoNivel.png").scaled(1400,900));
 }
 
