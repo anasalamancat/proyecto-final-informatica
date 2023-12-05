@@ -63,9 +63,12 @@ void Enemy::move(){
 }
 
 void Enemy::disparar(){
-    Bullet* bullet = new Bullet(pos().x(), pos().y(), enemy_direction_x);
-    bullet->setPos(this->pos().x()+100*enemy_direction_x, this->pos().y()+20);
+
+    static bool alternar = true; // Variable estática para alternar entre movimientos
+    tipoMovimiento tipo = alternar ? Parabolico : Circular;
+    Bullet* bullet = new Bullet(pos().x(), pos().y(), enemy_direction_x, tipo);
     scene()->addItem(bullet);
+    alternar = !alternar; // Cambiar el estado para la próxima bala
 }
 
 Enemy::~Enemy(){
