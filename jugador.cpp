@@ -53,30 +53,22 @@ void jugador::movementKeys(QKeyEvent *event)
         timerCaida->start(30);
         cambiarImagenDerecha();
         contPasosDerecha++;
-        if(currentX<1285 /*&& detectarColisionesPlataformas()==false*/){
+        if(currentX<1285){
             newX=currentX+move;
             this->setX(newX);
             desplazamientoSaltoDerecha=true;
-        }/*
-        else if(detectarColisionesPlataformas()){
-            newX=currentX-move;
-            this->setX(newX);
-        }*/
+
+    }
     }
     else if(event->key()==Qt::Key_A){
         timerCaida->start(30);
         cambiarImagenIzquierda();
         contPasosIzquierda++;
-        if(currentX>0 /*&& detectarColisionesPlataformas()==false*/){
+        if(currentX>0){
             newX=currentX-move;
             this->setX(newX);
             desplazamientoSaltoIzquierda=true;
-        }/*
-        else if(detectarColisionesPlataformas()){
-            newX=currentX+move;
-            this->setX(newX);
-            desplazamientoSaltoIzquierda=true;
-        }*/
+        }
     }
     else if(event->key()==Qt::Key_W && !timerSalto->isActive()&& currentY>16 &&detectarColisionesPlataformas()==false){
         timerCaida->stop();
@@ -86,7 +78,7 @@ void jugador::movementKeys(QKeyEvent *event)
         newY=currentY+move;
         this->setY(newY);
     }
-    qDebug()<<this->x()<<","<<this->y();
+    //qDebug()<<this->x()<<","<<this->y();
 }
 
 

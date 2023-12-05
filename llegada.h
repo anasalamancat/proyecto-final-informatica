@@ -2,8 +2,6 @@
 #define LLEGADA_H
 #include <QObject>
 #include <QGraphicsPixmapItem>
-#include <vector>
-#include <QString>
 
 
 class llegada: public QGraphicsPixmapItem, public QObject

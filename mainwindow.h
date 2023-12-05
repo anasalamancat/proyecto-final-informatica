@@ -6,9 +6,7 @@
 #include <QGraphicsView>
 #include <rick.h>
 #include <QDebug>
-#include "obstaculos.h"
 #include "jugador.h"
-#include "llegada.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -34,6 +32,7 @@ public:
 private slots:
     void on_pushButtonEmpezar_clicked();
     void completarNivel(bool NivelCompletado);
+    void enemigo1Dispara(bool Disparar);
 
 private:
     Ui::MainWindow *ui;
@@ -53,8 +52,13 @@ private:
     obstaculos *plataformas7;
     obstaculos *plataformas8;
     obstaculos *plataformas9;
+    enemigo *enemigo1;
+    enemigo *enemigo2;
+    enemigo *enemigo3;
+    enemigo *enemigo4;
     llegada *llegada1;
     int nivelActual;
+    int cantidadVidas;
 
 };
 #endif // MAINWINDOW_H
