@@ -204,7 +204,6 @@ void jugador::detectarColisionesBalas()
         if(objetoColision!=nullptr){
             inicializarValores();
             emit colisionBalaOEnemigo(true);
-            delete objetoColision;
         }
     }
 

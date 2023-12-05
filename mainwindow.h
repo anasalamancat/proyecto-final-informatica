@@ -4,8 +4,8 @@
 #include <QMainWindow>
 #include <background.h>
 #include <QGraphicsView>
-#include <rick.h>
 #include <QDebug>
+#include <QLabel>
 #include "jugador.h"
 
 QT_BEGIN_NAMESPACE
@@ -48,6 +48,7 @@ private:
     jugador *jugador1;
     QGraphicsPixmapItem *caraRick;
     QGraphicsPixmapItem *porcentajeVida;
+    QGraphicsPixmapItem *dinamica;
     obstaculos *plataformas1;
     obstaculos *plataformas2;
     obstaculos *plataformas3;

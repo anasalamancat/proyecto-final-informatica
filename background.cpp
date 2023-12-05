@@ -3,7 +3,7 @@
 background::background(QString direccion)
 {
     backgroundImage=new QGraphicsPixmapItem();
-    setZValue(1);
+    setZValue(3);
     setPixmap(QPixmap(direccion).scaled(1400,900));
 
 }

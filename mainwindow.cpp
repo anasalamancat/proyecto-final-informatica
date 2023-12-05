@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     caraRick= new QGraphicsPixmapItem();
     porcentajeVida=new QGraphicsPixmapItem(QPixmap(":/pictures/3corazones.png").scaled(150,150));
     llegada1= new llegada();
-
+    dinamica= new QGraphicsPixmapItem();
     cantidadVidas=3;
     random_numberX = rand() % 1000;
 
@@ -64,7 +64,7 @@ MainWindow::~MainWindow()
     delete enemigo2;
     delete enemigo3;
     delete enemigo4;
-
+    delete dinamica;
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
@@ -137,13 +137,13 @@ void MainWindow::nivel_3()
     fondo->setPixmap(QPixmap(":/pictures/garajeRick.png").scaled(1400,900));
     llegada1->setPos(60,260);
     enemigo3->setPixmap(QPixmap(":/pictures/enemigoCaminandoDerecha.png").scaled(100,140));
-    enemigo3->setPos(random_numberX,150);
+    enemigo3->setPos(random_numberX+250,150);
     scene->addItem(enemigo3);
     plataformas1->setPos(1100,340);
     plataformas2->setPos(880,450);
     plataformas3->setPos(690,600);
     plataformas4->setPos(490,500);
-    plataformas5->setPos(380,390);
+    plataformas5->setPos(365,390);
     plataformas6->setPos(200,650);
     plataformas7->setPos(50,400);
     plataformas9->setPos(560,730);
@@ -192,6 +192,7 @@ void MainWindow::on_pushButtonEmpezar_clicked()
 
 void MainWindow::on_pushButtongGameOver_clicked()
 {
+    dinamica->setZValue(1);
     menuPrincipal();
 }
 
@@ -252,5 +253,11 @@ void MainWindow::on_pushButtonDinamica_clicked()
 {
     ui->pushButtonDinamica->setVisible(false);
     ui->pushButtonEmpezar->setVisible(false);
+    ui->pushButtongGameOver->setVisible(true);
+    dinamica->setPos(500,50);
+    dinamica->setZValue(5);
+    dinamica->setPixmap(QPixmap(":/pictures/DINAMICA.png"));
+    scene->addItem(dinamica);
+
 }
 
