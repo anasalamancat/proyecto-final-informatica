@@ -8,6 +8,7 @@ jugador::jugador(QString direccion)
     timerSalto = new QTimer();
     timerColisiones = new QTimer();
     timerCaida= new QTimer();
+    timerHerido=new QTimer();
     inicializarValores();
 
     connect(this,&jugador::teclaSalto,this,&jugador::empezarSalto);
@@ -15,9 +16,11 @@ jugador::jugador(QString direccion)
     connect(timerCaida,&QTimer::timeout,this,&jugador::caerPorGravedad);
     connect(timerColisiones,&QTimer::timeout,this,&jugador::detectarColisionesPlataformas);
     connect(timerColisiones,&QTimer::timeout,this,&jugador::detectarColisionesLlegada);
+    connect(timerHerido,&QTimer::timeout,this,&jugador::detectarColisionesEnemigos);
+    connect(timerHerido,&QTimer::timeout,this,&jugador::detectarColisionesBalas);
 
     timerColisiones->start(10);
-
+    timerHerido->start(20);
 }
 
 jugador::~jugador()
@@ -26,6 +29,7 @@ jugador::~jugador()
     delete timerSalto;
     delete timerColisiones;
     delete timerCaida;
+    delete timerHerido;
 }
 
 void jugador::inicializarValores()
@@ -50,7 +54,7 @@ void jugador::movementKeys(QKeyEvent *event)
     int newX,newY;
     int move=16;
     if(event->key()== Qt::Key_D){
-        timerCaida->start(30);
+        timerCaida->start(18);
         cambiarImagenDerecha();
         contPasosDerecha++;
         if(currentX<1285){
@@ -61,7 +65,7 @@ void jugador::movementKeys(QKeyEvent *event)
     }
     }
     else if(event->key()==Qt::Key_A){
-        timerCaida->start(30);
+        timerCaida->start(18);
         cambiarImagenIzquierda();
         contPasosIzquierda++;
         if(currentX>0){
@@ -78,6 +82,8 @@ void jugador::movementKeys(QKeyEvent *event)
         newY=currentY+move;
         this->setY(newY);
     }
+    timerHerido->start(20);
+
     //qDebug()<<this->x()<<","<<this->y();
 }
 
@@ -132,7 +138,7 @@ void jugador::caerPorGravedad()
 {
     int currentY=this->y();
     if(detectarColisionesPlataformas()==false && currentY<744){
-        timerCaida->start(30);
+        timerCaida->start(18);
         this->setY(currentY+10);
     }
     else{
@@ -174,6 +180,35 @@ bool jugador::detectarColisionesLlegada()
                 return false;
         }
     }
+}
+
+void jugador::detectarColisionesEnemigos()
+{
+    QList<QGraphicsItem *>colisiones=collidingItems();
+
+    for(QGraphicsItem *i:colisiones){
+        enemigo* objetoColision=dynamic_cast<enemigo*>(i);
+        if(objetoColision!=nullptr){
+                inicializarValores();
+                emit colisionBalaOEnemigo(true);
+                timerHerido->stop();
+        }
+    }
+}
+
+void jugador::detectarColisionesBalas()
+{
+    QList<QGraphicsItem *>colisiones=collidingItems();
+
+    for(QGraphicsItem *i:colisiones){
+        balasenemigos* objetoColision=dynamic_cast<balasenemigos*>(i);
+        if(objetoColision!=nullptr){
+            inicializarValores();
+            emit colisionBalaOEnemigo(true);
+            timerHerido->stop();
+        }
+    }
+
 }
 
 void jugador::empezarSalto()
