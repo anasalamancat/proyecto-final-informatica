@@ -5,6 +5,7 @@
 #include <background.h>
 #include <QGraphicsView>
 #include <rick.h>
+#include <QDebug>
 #include "obstaculos.h"
 #include "jugador.h"
 #include "llegada.h"
@@ -26,12 +27,13 @@ public:
     void keyReleaseEvent(QKeyEvent *event);
     void menuPrincipal();
     void nivel_1();
+    void nivel_2();
 
 private slots:
     void on_pushButtonEmpezar_clicked();
+    void completarNivel(bool NivelCompletado);
 
 private:
-    QTimer* timercol;
     Ui::MainWindow *ui;
     QTimer *timerColisiones;
     background* fondo;
@@ -44,6 +46,10 @@ private:
     obstaculos *plataformas4;
     obstaculos *plataformas5;
     obstaculos *plataformas6;
+    obstaculos *plataformas7;
+    obstaculos *plataformas8;
+    obstaculos *plataformas9;
+
     llegada *llegada1;
 
 };

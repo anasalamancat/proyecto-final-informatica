@@ -13,7 +13,7 @@ private:
     int izquierda,derecha,arriba,abajo;
     int capa;
 public:
-    obstaculos(QString direccionImagen, int ancho,int alto, int xo, int yo);
+    obstaculos(QString direccionImagen, int ancho,int alto);
     ~obstaculos();
     QRectF boundingRect()const override;
     int getcapa();

@@ -8,6 +8,7 @@
 #include <QString>
 #include <QGraphicsView>
 #include "obstaculos.h"
+#include "llegada.h"
 
 class jugador: public QObject, public QGraphicsPixmapItem
 {
@@ -21,14 +22,16 @@ public:
     void cambiarImagenDerecha();
     void cambiarImagenIzquierda();
     int getcapa();
+    bool getPasarNivel();
+    void setPasarNivel(bool estado);
 
 signals:
     void teclaSalto();
+    void pasarDeNivel(bool);
 
 public slots:
     void empezarSalto();
     void retornarAPosicionPrevialSalto();
-    void detectarColisiones();
     void caerPorGravedad();
     bool detectarColisionesPlataformas();
     bool detectarColisionesLlegada();

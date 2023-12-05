@@ -18,11 +18,11 @@ jugador::jugador(QString direccion)
     colisionandoConPlataforma=false;
     estaEnSuelo==false;
 
-
     connect(this,&jugador::teclaSalto,this,&jugador::empezarSalto);
     connect(timerSalto,&QTimer::timeout,this,&jugador::retornarAPosicionPrevialSalto);
     connect(timerCaida,&QTimer::timeout,this,&jugador::caerPorGravedad);
     connect(timerColisiones,&QTimer::timeout,this,&jugador::detectarColisionesPlataformas);
+    connect(timerColisiones,&QTimer::timeout,this,&jugador::detectarColisionesLlegada);
 
     timerColisiones->start(10);
 
@@ -84,7 +84,7 @@ void jugador::movementKeys(QKeyEvent *event)
         newY=currentY+move;
         this->setY(newY);
     }
-    qDebug()<<this->x()<<","<<this->y();
+    //qDebug()<<this->x()<<","<<this->y();
 }
 
 
@@ -133,17 +133,6 @@ void jugador::cambiarImagenIzquierda()
 }
 
 
-void jugador::detectarColisiones()
-{
-    QList<QGraphicsItem *> colisiones= collidingItems();
-    for(QGraphicsItem *i : colisiones){
-        if(i && i!=this){
-        //if(i->collidesWithItem(this)&& i){
-            qDebug() <<"COLISION CONDICIONAL DETECTADA";
-        }
-    }
-}
-
 void jugador::caerPorGravedad()
 {
     int currentY=this->y();
@@ -164,7 +153,7 @@ bool jugador::detectarColisionesPlataformas()
     for(QGraphicsItem *i : colisiones){
         obstaculos* obstaculoColision =dynamic_cast<obstaculos*>(i);
         if(obstaculoColision!=nullptr){
-            qDebug()<<"plataforma";
+           // qDebug()<<"plataforma";
             colisionandoConPlataforma=true;
             return true;
         }
@@ -178,9 +167,20 @@ bool jugador::detectarColisionesPlataformas()
 
 bool jugador::detectarColisionesLlegada()
 {
+    QList<QGraphicsItem *>colisiones=collidingItems();
 
+    for(QGraphicsItem *i:colisiones){
+        llegada* objetoColision=dynamic_cast<llegada*>(i);
+        if(objetoColision!=nullptr){
+            qDebug()<<"llegóooo";
+            emit pasarDeNivel(true);
+            return true;
+        }
+        else{
+                return false;
+        }
+    }
 }
-
 
 void jugador::empezarSalto()
 {
