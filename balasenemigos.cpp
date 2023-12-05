@@ -18,26 +18,20 @@ balasenemigos::~balasenemigos()
 }
 
 void balasenemigos::move(){
-    int currentX=this->x();
-    float newX;
     float direccionBala = anguloLanzamiento * direccion;
 
-    tiempoVuelo += 0.1f;
-    float Posx = velocidad * qCos(qDegreesToRadians(direccionBala)) * tiempoVuelo;
-    float Posy = velocidad * qSin(qDegreesToRadians(direccionBala)) * tiempoVuelo - 0.5f * gravedad * tiempoVuelo * tiempoVuelo;
+    tiempoVuelo += 0.3f; // Puedes ajustar este valor según la frecuencia de actualización
 
-    if(direccion=1){
-        newX = Posx + posX;
-    }
-    if(direccion==-1){
-        newX = Posx - posX;
-    }
-    float newY = Posy + posY;
+    float x = velocidad * qCos(qDegreesToRadians(direccionBala)) * tiempoVuelo;
+    float y = velocidad * qSin(qDegreesToRadians(direccionBala)) * tiempoVuelo - 0.5f * gravedad * tiempoVuelo * tiempoVuelo;
 
-    this->setPos(newX,newY);
+    float newX = x + posX;
+    float newY = y + posY;
+
+    setPos(newX, newY);
 
     // si la bala sale de la escena
-    if (currentX + 50 < 0 || currentX + 50 > 1400 ){
+    if (newX + 50 < 0 || newX + 50 > 1400 ||newY>744){
         delete this;
     }
 }

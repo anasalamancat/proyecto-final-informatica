@@ -30,6 +30,7 @@ public:
 signals:
     void teclaSalto();
     void pasarDeNivel(bool);
+    void colisionBalaOEnemigo(bool);
 
 public slots:
     void empezarSalto();
@@ -37,12 +38,15 @@ public slots:
     void caerPorGravedad();
     bool detectarColisionesPlataformas();
     bool detectarColisionesLlegada();
+    void detectarColisionesEnemigos();
+    void detectarColisionesBalas();
 
 private:
     QGraphicsPixmapItem *Rick;
     QTimer* timerSalto;
     QTimer* timerColisiones;
     QTimer* timerCaida;
+    QTimer* timerHerido;
 
     float anchoCuerpo;
     float largoCuerpo;
