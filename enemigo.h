@@ -11,17 +11,16 @@ class enemigo: public QObject,public QGraphicsPixmapItem
     Q_OBJECT
 public:
 
-    enemigo(QString direccion, int velocidadDisparos);
+    enemigo(QString direccion, int _velocidadDisparos);
     ~enemigo();
-
     int getEnemy_direction_x() const;
-
     int getPosX() const;
-
     int getPosY() const;
+    void pararDisparos();
+    void iniciarDisparos();
 
 public slots:
-    void move(); //movimiento de los enemigos
+    void move();
     void disparar();
 
 signals:
@@ -35,6 +34,7 @@ private:
     QTimer* timerMove;
     int posX;
     int posY;
+    int velocidadDisparos;
 };
 
 #endif // ENEMIGO_H

@@ -35,6 +35,9 @@ private slots:
     void on_pushButtonEmpezar_clicked();
     void completarNivel(bool NivelCompletado);
     void enemigo1Dispara(bool Disparar);
+    void enemigo2Dispara(bool Disparar);
+    void enemigo3Dispara(bool Disparar);
+    void enemigo4Dispara(bool Disparar);
     void jugadorHerido(bool herido);
     void on_pushButtongGameOver_clicked();
 

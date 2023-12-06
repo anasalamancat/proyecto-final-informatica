@@ -1,19 +1,14 @@
 #include "enemigo.h"
 
-enemigo::enemigo(QString direccion, int velocidadDisparos)
+enemigo::enemigo(QString direccion, int _velocidadDisparos)
 {
     sprite=new QGraphicsPixmapItem();
     sprite->setPixmap(QPixmap(direccion).scaled(100,140));
     timerB = new QTimer(this);
     timerMove=new QTimer();
     connect(timerMove,SIGNAL(timeout()),this,SLOT(move()));
-    //connect(this, SIGNAL(collision(QGraphicsItem*)), this, SLOT(colision(QGraphicsItem*)));
-
     connect(timerB, SIGNAL(timeout()), this, SLOT(disparar()));
-    timerB -> start(velocidadDisparos);
-    timerMove->start(50);
-
-
+    velocidadDisparos=_velocidadDisparos;
     enemy_direction_x = 1;
     ENEMY_SPEED_X = 5;
 
@@ -27,15 +22,23 @@ enemigo::~enemigo()
     delete timerMove;
 }
 void enemigo::disparar(){
-    //balasenemigos* bullet = new balasenemigos(pos().x(), pos().y(), enemy_direction_x,":/pictures/balas.png");
-    //bullet->setPos(this->x()+100*enemy_direction_x, this->y()+20);
-    //qDebug()<<"disparar";
     emit agregarBala(true);
 }
 
 int enemigo::getPosY() const
 {
     return this->y();
+}
+
+void enemigo::pararDisparos()
+{
+    timerB->stop();
+}
+
+void enemigo::iniciarDisparos()
+{
+    timerB->start(velocidadDisparos);
+    timerMove->start(45);
 }
 
 int enemigo::getPosX() const
