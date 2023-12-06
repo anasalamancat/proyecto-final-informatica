@@ -1,8 +1,7 @@
 #include "balasenemigos.h"
 
-balasenemigos::balasenemigos( float _posx, float _posy, int _direccion, QString direccion,tipoMovimiento tipo){
+balasenemigos::balasenemigos( float _posx, float _posy, int _direccion, QString direccion){
     imagenBala= new QGraphicsPixmapItem();
-
     timerBalas=new QTimer();
     connect(timerBalas,&QTimer::timeout,this,&balasenemigos::move);
     timerBalas->start(70);
@@ -18,46 +17,34 @@ balasenemigos::balasenemigos( float _posx, float _posy, int _direccion, QString 
     setZValue(5);
     posX = _posx;
     posY = _posy;
-    tipoMovi=tipo;
     direccion = _direccion;
-    radioInicial = _posx;
-    alturaInicial = _posy;
 }
 
 balasenemigos::~balasenemigos()
 {
     delete timerBalas;
     delete imagenBala;
-    delete timerA;
-    delete timerC;
 }
 
 void balasenemigos::move(){
     float direccionBala = anguloLanzamiento * direccion;
 
-    tiempoVuelo += 0.3f;
+    tiempoVuelo += 0.3f; // Puedes ajustar este valor según la frecuencia de actualización
+
     float x = velocidad * qCos(qDegreesToRadians(direccionBala)) * tiempoVuelo;
     float y = velocidad * qSin(qDegreesToRadians(direccionBala)) * tiempoVuelo - 0.5f * gravedad * tiempoVuelo * tiempoVuelo;
-    posX = x *direccion;
-    posY = y * direccion;
-    setPos(posX, posY);
 
-    if (this->x() + 50 < 0 || this->x() + 50 > 1400 ||this->y()>744){
+    float newX = x + posX;
+    float newY = y + posY;
+
+    setPos(newX, newY);
+
+    // si la bala sale de la escena
+    if (newX + 50 < 0 || newX + 50 > 1400 ||newY>744){
         delete this;
     }
 }
-
-void balasenemigos::alternarMove()
-{
-    if (tipoMovi == Parabolico) {
-        move();
-    }
-    else{
-        moveCircular();
-
-    }
-}
-
+/*
 void balasenemigos::moveCircular()
 {
     tiempoVuelo += 0.1f;
@@ -72,3 +59,4 @@ void balasenemigos::moveCircular()
         delete this;
     }
 }
+*/

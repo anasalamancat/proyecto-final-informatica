@@ -35,9 +35,8 @@ private slots:
     void on_pushButtonEmpezar_clicked();
     void completarNivel(bool NivelCompletado);
     void enemigo1Dispara(bool Disparar);
-    void enemigo2Dispara(bool Disparar);
-    void enemigo3Dispara(bool Disparar);
-    void enemigo4Dispara(bool Disparar);
+   // void enemigo2Dispara(bool Disparar);
+   // void enemigo3Dispara(bool Disparar);
     void jugadorHerido(bool herido);
     void on_pushButtongGameOver_clicked();
 
@@ -52,6 +51,7 @@ private:
     QGraphicsPixmapItem *caraRick;
     QGraphicsPixmapItem *porcentajeVida;
     QGraphicsPixmapItem *dinamica;
+    QGraphicsPixmapItem *titulo;
     obstaculos *plataformas1;
     obstaculos *plataformas2;
     obstaculos *plataformas3;
@@ -64,7 +64,6 @@ private:
     enemigo *enemigo1;
     enemigo *enemigo2;
     enemigo *enemigo3;
-    enemigo *enemigo4;
     llegada *llegada1;
     int nivelActual;
     int random_numberX;

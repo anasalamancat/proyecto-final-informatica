@@ -11,6 +11,8 @@ enemigo::enemigo(QString direccion, int _velocidadDisparos)
     velocidadDisparos=_velocidadDisparos;
     enemy_direction_x = 1;
     ENEMY_SPEED_X = 5;
+    timerB->start(velocidadDisparos);
+    timerMove->start(45);
 
     setZValue(5);
 }
@@ -33,12 +35,6 @@ int enemigo::getPosY() const
 void enemigo::pararDisparos()
 {
     timerB->stop();
-}
-
-void enemigo::iniciarDisparos()
-{
-    timerB->start(velocidadDisparos);
-    timerMove->start(45);
 }
 
 int enemigo::getPosX() const

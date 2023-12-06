@@ -17,7 +17,6 @@ public:
     int getPosX() const;
     int getPosY() const;
     void pararDisparos();
-    void iniciarDisparos();
 
 public slots:
     void move();

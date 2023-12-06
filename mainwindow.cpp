@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     porcentajeVida=new QGraphicsPixmapItem(QPixmap(":/pictures/3corazones.png").scaled(150,150));
     llegada1= new llegada();
     dinamica= new QGraphicsPixmapItem();
+    titulo=new QGraphicsPixmapItem();
     random_numberX = rand() % 1000;
 
     plataformas1=new obstaculos(":/pictures/plataformaPequena.png",200,40);
@@ -28,9 +29,8 @@ MainWindow::MainWindow(QWidget *parent)
     plataformas9=new obstaculos(":/pictures/plataformaPequena.png",170,40);
 
     enemigo1=new enemigo(":/pictures/enemigoCaminandoDerecha.png",3000);
-    enemigo2=new enemigo(":/pictures/enemigoCaminandoDerecha.png",3000);
     enemigo3=new enemigo(":/pictures/enemigoCaminandoDerecha.png",3000);
-    enemigo4=new enemigo(":/pictures/enemigoCaminandoDerecha.png",2500);
+    enemigo2=new enemigo(":/pictures/enemigoCaminandoDerecha.png",3000);
 
     ui->graphicsView->setScene(scene);
 
@@ -39,8 +39,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(jugador1,SIGNAL(pasarDeNivel(bool)),this,SLOT(completarNivel(bool)));
     connect(enemigo1,SIGNAL(agregarBala(bool)),this,SLOT(enemigo1Dispara(bool)));
-    connect(enemigo2,SIGNAL(agregarBala(bool)),this,SLOT(enemigo2Dispara(bool)));
-    connect(enemigo3,SIGNAL(agregarBala(bool)),this,SLOT(enemigo3Dispara(bool)));
 
     connect(jugador1,SIGNAL(colisionBalaOEnemigo(bool)),this,SLOT(jugadorHerido(bool)));
 }
@@ -63,7 +61,6 @@ MainWindow::~MainWindow()
     delete enemigo1;
     delete enemigo2;
     delete enemigo3;
-    delete enemigo4;
     delete dinamica;
 }
 
@@ -81,7 +78,6 @@ void MainWindow::nivel_1()
 {
     nivelActual=0;
     cantidadVidas=3;
-    enemigo1->iniciarDisparos();
     ui->lineEdit->setVisible(true);
     ui->lineEdit->setText("NIVEL/RECUERDO 1");
     scene->setBackgroundBrush(Qt::green);
@@ -92,6 +88,7 @@ void MainWindow::nivel_1()
     porcentajeVida->setPixmap(QPixmap(":/pictures/3corazones.png").scaled(150,150));
     caraRick->setZValue(5);
     porcentajeVida->setZValue(5);
+    titulo->setZValue(1);
     scene->addItem(fondo);
     scene->addItem(jugador1);
     scene->addItem(caraRick);
@@ -126,7 +123,6 @@ void MainWindow::nivel_2()
     enemigo2->setPixmap(QPixmap(":/pictures/enemigoCaminandoDerecha.png").scaled(100,140));
     scene->addItem(enemigo2);
     enemigo2->setPos(random_numberX+100,500);
-    enemigo2->iniciarDisparos();
     fondo->setPixmap(QPixmap(":/pictures/FondoSegundoNivel.png").scaled(1400,900));
     plataformas1->setPos(600,550);
     plataformas2->setPos(800,712);
@@ -138,12 +134,12 @@ void MainWindow::nivel_2()
 
 void MainWindow::nivel_3()
 {
+
     ui->lineEdit->setText("NIVEL/RECUERDO 3");
     fondo->setPixmap(QPixmap(":/pictures/garajeRick.png").scaled(1400,900));
     llegada1->setPos(60,260);
     enemigo3->setPixmap(QPixmap(":/pictures/enemigoCaminandoDerecha.png").scaled(100,140));
     enemigo3->setPos(random_numberX+50,150);
-    enemigo3->iniciarDisparos();
     scene->addItem(enemigo3);
     plataformas1->setPos(1100,340);
     plataformas2->setPos(880,450);
@@ -175,7 +171,6 @@ void MainWindow::eliminarElementos()
     scene->removeItem(enemigo1);
     scene->removeItem(enemigo2);
     scene->removeItem(enemigo3);
-    scene->removeItem(enemigo4);
     scene->removeItem(caraRick);
     scene->removeItem(porcentajeVida);
     ui->lineEdit->setVisible(false);
@@ -183,6 +178,10 @@ void MainWindow::eliminarElementos()
 
 void MainWindow::menuPrincipal()
 {
+    titulo->setPixmap(QPixmap(":/pictures/Rickternal.png").scaled(600,300));
+    titulo->setZValue(5);
+    titulo->setPos(440,570);
+    scene->addItem(titulo);
     fondo->setPixmap(QPixmap(":/pictures/FondoMenu.PNG").scaled(1400,900));
     scene->setBackgroundBrush(Qt::black);
     ui->pushButtonEmpezar->setVisible(true);
@@ -229,20 +228,20 @@ void MainWindow::enemigo1Dispara(bool Disparar)
         int direccion=enemigo1->getEnemy_direction_x();
         int posX= enemigo1->getPosX();
         int posY=enemigo1->getPosY();
-        balasenemigos* bullet = new balasenemigos(posX,posY, direccion,":/pictures/balaa.png",tipoMovimiento::Parabolico);
-        bullet->setPixmap(QPixmap(":/pictures/balaa.png").scaled(80,80));
+        balasenemigos* bullet = new balasenemigos(posX,posY, direccion,":/pictures/balaa.png");
+        bullet->setPixmap(QPixmap(":/pictures/balaa.png").scaled(70,70));
         scene->addItem(bullet);
         bullet->setPos(posX+(direccion*100),posY+20);
     }
 }
-
+/*
 void MainWindow::enemigo2Dispara(bool Disparar)
 {
     if(Disparar){
         int direccion=enemigo2->getEnemy_direction_x();
         int posX= enemigo2->getPosX();
         int posY=enemigo2->getPosY();
-        balasenemigos* bullet = new balasenemigos(posX,posY, direccion,":/pictures/balaa.png",tipoMovimiento:: Parabolico);
+        balasenemigos* bullet = new balasenemigos(posX,posY, direccion,":/pictures/balaa.png");
         bullet->setPixmap(QPixmap(":/pictures/balaa.png").scaled(70,70));
         scene->addItem(bullet);
         bullet->setPos(posX+(direccion*100),posY+20);
@@ -256,27 +255,14 @@ void MainWindow::enemigo3Dispara(bool Disparar)
             int direccion=enemigo3->getEnemy_direction_x();
             int posX= enemigo3->getPosX();
             int posY=enemigo3->getPosY();
-            balasenemigos* bullet = new balasenemigos(posX,posY, direccion,":/pictures/balaa.png",tipoMovimiento::Parabolico);
+            balasenemigos* bullet = new balasenemigos(posX,posY, direccion,":/pictures/balaa.png");
             bullet->setPixmap(QPixmap(":/pictures/balaa.png").scaled(70,70));
             scene->addItem(bullet);
             bullet->setPos(posX+(direccion*100),posY+20);
         }
 
 }
-
-void MainWindow::enemigo4Dispara(bool Disparar)
-{
-    if(Disparar){
-        int direccion=enemigo4->getEnemy_direction_x();
-        int posX= enemigo4->getPosX();
-        int posY=enemigo4->getPosY();
-        balasenemigos* bullet = new balasenemigos(posX,posY, direccion,":/pictures/balaa.png",tipoMovimiento::Parabolico);
-        bullet->setPixmap(QPixmap(":/pictures/balaa.png").scaled(70,70));
-        scene->addItem(bullet);
-        bullet->setPos(posX+(direccion*100),posY+20);
-    }
-}
-
+*/
 void MainWindow::jugadorHerido(bool herido)
 {
     cantidadVidas--;
